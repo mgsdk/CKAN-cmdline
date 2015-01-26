@@ -48,7 +48,7 @@ namespace CKAN.CmdLine
             }
             catch(Exception ex)
             {
-                CrashInformation.DumpToFile(ex, null);
+                CrashInformation.DumpToFile(ex);
                 return Exit.ERROR;
             }
         }
