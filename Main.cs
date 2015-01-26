@@ -34,14 +34,29 @@ namespace CKAN.CmdLine
             LogManager.GetRepository().Threshold = Level.Warn;
             log.Debug("CKAN started");
 
+            // If we're starting with no options then invoke the GUI instead.
+            try
+            {
+                if (args.Length == 0)
+                {
+                    return Gui(new GuiOptions(), args);
+                }
+                else
+                {
+                    return CLI(args);
+                }
+            }
+            catch(Exception ex)
+            {
+                CrashInformation.DumpToFile(ex, null);
+                return Exit.ERROR;
+            }
+        }
+
+        private static int CLI(string[] args)
+        {
             Options cmdline;
             IUser user = null;
-
-            // If we're starting with no options then invoke the GUI instead.
-            if (args.Length == 0)
-            {
-                return Gui(new GuiOptions(), args);
-            }
 
             try
             {
